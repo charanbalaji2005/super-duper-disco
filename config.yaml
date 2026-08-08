@@ -1,0 +1,56 @@
+# Editorial / tunable configuration. Safe to version-control (no secrets).
+
+expressions:
+  - happy
+  - sad
+  - angry
+  - surprise
+  - fear
+  - disgust
+  - neutral
+
+classification:
+  human_animal_threshold: 0.75
+  gender_threshold: 0.65
+  animal_species_threshold: 0.6
+
+quality:
+  min_face_confidence: 0.75            # relaxed from 0.80 — 0.79 is a valid face
+  min_landmark_score: 0.7
+  max_blur_variance_reject_below: 80.0     # Laplacian variance; below this = too blurry
+  min_identity_similarity: 0.45           # relaxed from 0.55 — gives headroom while expressions strengthen
+  reject_duplicate_hash_distance: 4        # perceptual hash distance below which we treat as "no change"
+
+generation:
+  default_strength: 0.50          # raised from 0.45 — gives more room for expression deformation
+  default_guidance_scale: 8.5     # raised from 7.5 — stronger adherence to expression tokens
+  default_steps: 40               # raised from 30 — sharper details at same quality level
+  negative_prompt: >
+    different person, different identity, changed facial structure, altered face shape, different eyes, different nose, different lips, different jawline, different ears, different hairstyle, age change, skin tone change, face deformation, distorted face, asymmetrical eyes, malformed eyes, extra facial features, unrealistic expression, exaggerated expression, cartoon, anime, painting, CGI, plastic skin, blurry face, low resolution, artifacts, duplicate face
+
+
+alignment:
+  target_size: 512
+  left_eye_ratio: [0.35, 0.35]
+  right_eye_ratio: [0.65, 0.35]
+
+lora:
+  # If set, this LoRA is auto-loaded at pipeline startup. Leave null to
+  # start with the base SD1.5 model and let callers pick a LoRA per-request
+  # via the `lora_name` field on POST /api/generate.
+  default_lora_name: null
+  default_scale: 0.8
+
+lora_training:
+  base_model: "./models/stable-diffusion-v1-5"
+  resolution: 512
+  rank: 32                    # raised from 16 — higher rank = more expression capacity
+  alpha: 32                   # keep equal to rank
+  learning_rate: 8.0e-5       # slightly lower than default for stability at higher rank
+  train_batch_size: 1
+  gradient_accumulation_steps: 4
+  max_train_steps: 4000       # doubled from 2000 — more steps for better expression coverage
+  checkpointing_steps: 500
+  mixed_precision: "fp16"     # fp16 | bf16 | no
+  train_text_encoder: true    # enable text encoder tuning for better expression-token alignment
+  seed: 42

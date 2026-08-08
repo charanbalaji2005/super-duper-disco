@@ -1,0 +1,111 @@
+# =============================================================================
+# Synthetic Expression Generator — Root .gitignore
+# Copyright (c) 2026 Charan Balaji. All Rights Reserved.
+# =============================================================================
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+.env.bak
+
+# ── Environment / secrets (NEVER commit these) ────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ── Database files ────────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+backend/database/*.db
+
+# ── Model weights (large binary assets — use Git LFS or host separately) ──────
+models/**/*.bin
+models/**/*.safetensors
+models/**/*.onnx
+models/**/*.ckpt
+models/**/*.pt
+models/**/*.pth
+models/**/*.pkl
+models/stable-diffusion-v1-5/
+models/insightface/models/buffalo_l/
+models/insightface/models/*.zip
+
+# ── LoRA adapters (trained output — not source code) ──────────────────────────
+models/loras/
+
+# ── Classifier weights ────────────────────────────────────────────────────────
+models/classifiers/**/*.onnx
+
+# ── Runtime uploads / outputs / temp / logs ───────────────────────────────────
+backend/uploads/*
+backend/outputs/*
+backend/temp/*
+backend/logs/*
+!backend/uploads/.gitkeep
+!backend/outputs/.gitkeep
+!backend/temp/.gitkeep
+!backend/logs/.gitkeep
+
+# ── Generated dataset artifacts ───────────────────────────────────────────────
+datasets/uploads/*
+datasets/aligned/*
+datasets/generated/**/*
+datasets/lora_training/
+
+# ── Test artifacts ────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+*.xml
+*.log
+
+# ── Jupyter / notebooks ───────────────────────────────────────────────────────
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# ── Node / Frontend ───────────────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local
+frontend/*.tsbuildinfo
+
+# ── OS / IDE artifacts ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ── Benchmark & temp scripts ─────────────────────────────────────────────────
+scratch/
+tmp/
+*.tmp
+
+# ── Windows installers (e.g. vc_redist) ──────────────────────────────────────
+*.exe

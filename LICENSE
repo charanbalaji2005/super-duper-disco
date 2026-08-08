@@ -1,0 +1,61 @@
+PROPRIETARY SOFTWARE LICENSE
+
+Copyright (c) 2026 Charan Balaji. All Rights Reserved.
+
+================================================================================
+NOTICE: This software, its source code, dataset, training pipeline, model
+weights, configuration files, and all associated files (collectively, the
+"Software") are the exclusive intellectual property of Charan Balaji.
+================================================================================
+
+RESTRICTIONS — THE FOLLOWING ACTS ARE STRICTLY PROHIBITED:
+
+1. COPYING & REDISTRIBUTION
+   You may NOT copy, reproduce, duplicate, republish, upload, post, transmit,
+   or distribute this Software or any portion of it, in any form or by any
+   means, without prior written permission from the copyright holder.
+
+2. DATASET USAGE
+   The DATASET/ directory (including train/ and test/ subdirectories), the
+   train_labels.csv, and test_labels.csv files are proprietary data assets.
+   You may NOT use, copy, redistribute, re-label, or build derivative datasets
+   from them without explicit written consent from the copyright holder.
+
+3. CODE REUSE & DERIVATIVE WORKS
+   You may NOT modify, adapt, translate, reverse-engineer, decompile,
+   disassemble, or create derivative works based on this Software without
+   prior written permission. Any work that contains substantially similar
+   code, architecture, pipeline design, or prompt templates is considered
+   a derivative work and is covered by this license.
+
+4. COMMERCIAL USE
+   Commercial use of any part of this Software, its trained models, generated
+   outputs, or dataset is strictly prohibited without a separate commercial
+   license agreement signed by the copyright holder.
+
+5. PUBLISHING & OPEN-SOURCING
+   You may NOT publish, open-source, or make publicly available this Software
+   or any substantial portion of it on any platform (including but not limited
+   to GitHub, GitLab, Hugging Face, Kaggle, or any code-sharing platform)
+   without prior written permission.
+
+6. ACADEMIC & RESEARCH USE
+   Academic or research use requires prior written approval. If permission is
+   granted, any publication, paper, or report must cite the original author:
+   Charan Balaji, "Synthetic Facial Expression Generator", 2026.
+
+PERMITTED USE:
+
+- You may run and use this Software solely for your own private, non-commercial,
+  non-redistributed personal evaluation, subject to all restrictions above.
+- You may view the source code for personal educational study only, provided
+  you do not copy, publish, or share it.
+
+DISCLAIMER:
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OR INABILITY TO USE THIS
+SOFTWARE.
+
+For licensing inquiries, contact the copyright holder directly.

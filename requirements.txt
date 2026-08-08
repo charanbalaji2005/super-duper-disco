@@ -1,0 +1,50 @@
+# --- Core web framework ---
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9
+pydantic==2.7.4
+pydantic-settings==2.3.4
+
+# --- Diffusion / generation ---
+torch==2.3.1
+torchvision==0.18.1
+diffusers==0.29.2
+transformers==4.42.4
+accelerate==0.31.0
+safetensors==0.4.3
+xformers==0.0.27; platform_system == "Linux"
+
+# --- LoRA fine-tuning (scripts/train_lora.py) ---
+peft==0.11.1
+bitsandbytes==0.43.1; platform_system == "Linux"
+huggingface_hub==0.24.5
+tqdm==4.66.4
+
+# --- Face detection / landmarks / alignment ---
+insightface>=0.7.3
+onnxruntime-gpu==1.18.1
+mediapipe==0.10.14
+opencv-python-headless==4.10.0.84
+
+# --- Image processing / quality ---
+Pillow==10.4.0
+numpy==1.26.4
+scikit-image==0.24.0
+imagehash==4.3.1
+
+# --- Database ---
+SQLAlchemy==2.0.31
+aiosqlite==0.20.0
+alembic==1.13.2
+
+# --- Utilities ---
+python-dotenv==1.0.1
+pyyaml==6.0.1
+loguru==0.7.2
+tenacity==8.5.0
+aiofiles==24.1.0
+
+# --- Testing ---
+pytest==8.2.2
+pytest-asyncio==0.23.7
+httpx==0.27.0
