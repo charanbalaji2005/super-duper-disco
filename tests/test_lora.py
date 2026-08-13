@@ -41,12 +41,12 @@ def test_list_available_loras_finds_trained_adapter(tmp_path, monkeypatch):
 
 
 def test_set_lora_none_is_a_noop_before_pipeline_loaded():
-    # set_lora(None) on a generator with no pipeline loaded yet would trigger
-    # a full SD1.5 load attempt; this test just documents that calling
-    # set_lora(None, ...) when nothing is loaded should not raise due to the
-    # "already == None" short-circuit, without needing real SD weights.
+
+
+
+
     generator = Img2ImgGenerator()
     generator._loaded_lora_name = None
-    # No pipeline load should be triggered since lora_name matches current state.
+
     generator.set_lora(None)
     assert generator._loaded_lora_name is None

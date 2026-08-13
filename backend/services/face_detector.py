@@ -21,10 +21,10 @@ from backend.utils.logger import logger
 
 @dataclass
 class DetectedFace:
-    bbox: tuple[int, int, int, int]       # x1, y1, x2, y2
+    bbox: tuple[int, int, int, int]
     landmarks_5pt: list[tuple[float, float]]
     confidence: float
-    embedding: np.ndarray | None = None    # 512-d ArcFace embedding, if available
+    embedding: np.ndarray | None = None
 
 
 class FaceDetector:
@@ -46,7 +46,7 @@ class FaceDetector:
                 app.prepare(ctx_id=0 if self.settings.device == "cuda" else -1, det_size=(640, 640))
                 self._insightface_app = app
                 logger.info("InsightFace FaceAnalysis loaded.")
-            except Exception as e:  # model not downloaded, no GPU runtime, etc.
+            except Exception as e:
                 logger.warning("InsightFace unavailable ({}), will use MediaPipe fallback.", e)
                 self._insightface_app = False
         return self._insightface_app
@@ -63,13 +63,13 @@ class FaceDetector:
     def detect(self, image_rgb: np.ndarray) -> DetectedFace | None:
         app = self._get_insightface()
         if app:
-            faces = app.get(image_rgb[:, :, ::-1])  # insightface expects BGR
+            faces = app.get(image_rgb[:, :, ::-1])
             if not faces:
                 return None
-            # Take the largest face if multiple are present.
+
             face = max(faces, key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1]))
             x1, y1, x2, y2 = [int(v) for v in face.bbox]
-            kps = [(float(x), float(y)) for x, y in face.kps]  # 5pt: L eye, R eye, nose, L mouth, R mouth
+            kps = [(float(x), float(y)) for x, y in face.kps]
             return DetectedFace(
                 bbox=(x1, y1, x2, y2),
                 landmarks_5pt=kps,
@@ -77,7 +77,7 @@ class FaceDetector:
                 embedding=face.normed_embedding,
             )
 
-        # --- MediaPipe fallback (no embedding available) ---
+
         detector = self._get_mediapipe()
         results = detector.process(image_rgb)
         if not results.detections:
@@ -89,7 +89,7 @@ class FaceDetector:
         x2, y2 = int((box.xmin + box.width) * w), int((box.ymin + box.height) * h)
 
         kp = det.location_data.relative_keypoints
-        # MediaPipe order: right_eye, left_eye, nose_tip, mouth_center, right_ear, left_ear
+
         landmarks = [(p.x * w, p.y * h) for p in kp[:5]]
 
         return DetectedFace(

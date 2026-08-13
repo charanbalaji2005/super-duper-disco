@@ -32,8 +32,8 @@ from backend.utils.logger import logger
 
 @dataclass
 class ClassificationResult:
-    category: str          # "human" | "animal"
-    subtype: str            # "male" | "female" | "cat" | "dog" | "other" | "unspecified"
+    category: str
+    subtype: str
     category_confidence: float
     subtype_confidence: float
 
@@ -46,7 +46,7 @@ class ClassifierService:
         self._gender_model = None
         self._animal_species_model = None
 
-    # -- lazy loaders -----------------------------------------------------
+
     def _load(self, attr: str, subdir: str):
         cached = getattr(self, attr)
         if cached is not None:
@@ -71,7 +71,7 @@ class ClassifierService:
     def _load_animal_species_model(self):
         return self._load("_animal_species_model", "animal")
 
-    # -- public API ---------------------------------------------------------
+
     def classify(self, face_crop: np.ndarray, has_animal_face_landmarks: bool) -> ClassificationResult:
         """
         `has_animal_face_landmarks` comes from face_detector: if a human face
@@ -96,17 +96,17 @@ class ClassifierService:
             subtype_confidence=sub_conf,
         )
 
-    # -- inference ------------------------------------------------------
+
     def _run_human_animal(self, face_crop: np.ndarray, animal_hint: bool, model) -> tuple[str, float]:
         if isinstance(model, OnnxClassifier):
             return model.predict(face_crop)
-        # Heuristic fallback: trust upstream detector hint.
+
         return ("animal", 0.6) if animal_hint else ("human", 0.6)
 
     def _run_gender(self, face_crop: np.ndarray, model) -> tuple[str, float]:
         if isinstance(model, OnnxClassifier):
             return model.predict(face_crop)
-        return ("unspecified", 0.0)  # heuristic mode intentionally abstains
+        return ("unspecified", 0.0)
 
     def _run_species(self, face_crop: np.ndarray, model) -> tuple[str, float]:
         if isinstance(model, OnnxClassifier):

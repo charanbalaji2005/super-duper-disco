@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Skeleton training script for the human/animal (and optionally gender/species)
 classifiers referenced in backend/services/classifier_service.py.

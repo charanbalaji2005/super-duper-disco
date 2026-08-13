@@ -62,7 +62,7 @@ async def get_generation_progress(request_id: str):
             status="idle",
             progress_percent=0,
             current_step=0,
-            total_steps=30,
+            total_steps=13,
             current_expression="",
             total_expressions=1,
         )
@@ -145,7 +145,7 @@ async def generate_expressions(payload: GenerateRequest, db: AsyncSession = Depe
                 callback=progress_callback,
             )
         
-        # Override output request_id so it matches our tracked ID
+
         output.request_id = request_id
     except ValueError as e:
         progress_tracker.set_progress(

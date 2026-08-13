@@ -66,7 +66,7 @@ const defaultSettings: GenerationSettings = {
   loraName: null,
   loraWeight: 0.8,
   guidanceScale: 7.5,
-  steps: 30,
+  steps: 13,
   seed: null,
   strength: 0.45,
 };
@@ -121,7 +121,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       }
       setBackendHealth(false);
     } catch {
-      // Direct native fetch fallback to 127.0.0.1:8000/health
+      
       try {
         const raw = await fetch("http://127.0.0.1:8000/health", { cache: "no-store" });
         if (raw.ok) {

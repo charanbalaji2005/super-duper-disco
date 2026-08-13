@@ -28,22 +28,21 @@ from pathlib import Path
 
 from backend.config import get_settings
 
-# Short identity anchors — just enough to ground the subject type without
-# diluting the expression tokens with repetitive identity prose.
+
+
 _IDENTITY_ANCHOR = {
     "human": "same person, same face, same identity,",
     "animal": "same animal, same face, same identity,",
 }
 
-# Appended after the expression text to maintain photorealism and scene
-# consistency without overloading the prompt with identity boilerplate.
+
+
 _QUALITY_TAIL = (
     "photorealistic portrait, same lighting, same background, same pose, "
     "same skin tone, same hairstyle, high detail skin texture, sharp focus"
 )
 
 
-@lru_cache
 def _load_expression_prompt(expression: str) -> str:
     settings = get_settings()
     path: Path = settings.prompts_dir / f"{expression.lower()}.txt"

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Downloads the model weights this project needs. Run once before starting the
 backend:
@@ -26,15 +26,15 @@ def download_stable_diffusion():
 
 
 def download_insightface():
-    # InsightFace's FaceAnalysis auto-downloads the 'buffalo_l' model pack
-    # into its root dir on first use, so this just triggers that.
+
+
     from insightface.app import FaceAnalysis
 
     dest = ROOT / "models" / "insightface"
     dest.mkdir(parents=True, exist_ok=True)
     print(f"Downloading InsightFace buffalo_l pack -> {dest}")
     app = FaceAnalysis(name="buffalo_l", root=str(dest))
-    app.prepare(ctx_id=-1)  # CPU is fine just for triggering the download
+    app.prepare(ctx_id=-1)
 
 
 def main():

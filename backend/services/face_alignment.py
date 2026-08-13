@@ -17,7 +17,7 @@ def align_face(image_rgb: np.ndarray, face: DetectedFace, mesh: LandmarkResult |
     if mesh is not None:
         left_eye, right_eye = mesh.left_eye, mesh.right_eye
     else:
-        # InsightFace 5pt order: [left_eye, right_eye, nose, mouth_left, mouth_right]
+
         left_eye, right_eye = face.landmarks_5pt[0], face.landmarks_5pt[1]
 
     return align_by_eyes(image_rgb, left_eye, right_eye)

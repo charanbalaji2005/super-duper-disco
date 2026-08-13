@@ -67,8 +67,8 @@ class Img2ImgGenerator:
         pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
             str(model_path), torch_dtype=dtype, safety_checker=None, low_cpu_mem_usage=True
         )
-        # DPM-Solver++ gives noticeably better quality/speed than the default
-        # PNDM scheduler at the low step counts (~30) this app uses.
+
+
         pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
         pipe = pipe.to(self.settings.device)
         if self.settings.device == "cuda":
@@ -78,14 +78,14 @@ class Img2ImgGenerator:
                 logger.warning("xformers not available; continuing without memory-efficient attention.")
         self._pipe = pipe
 
-        # Auto-load a default LoRA if configured and present on disk.
+
         default_lora = self.lora_cfg.get("default_lora_name")
         if default_lora:
             self.set_lora(default_lora, weight=self.lora_cfg.get("default_scale", 0.8))
 
         return self._pipe
 
-    # -- LoRA management ---------------------------------------------------
+
     def list_available_loras(self) -> list[str]:
         lora_root = Path("models/loras")
         if not lora_root.exists():
@@ -103,14 +103,14 @@ class Img2ImgGenerator:
         produced by scripts/train_lora.py.
         """
         if lora_name == self._loaded_lora_name:
-            return  # already in the requested state, nothing to do — and no
-            # need to force-load the (possibly not-yet-downloaded) SD pipeline
-            # just to confirm that.
+            return
+
+
 
         pipe = self._load_pipeline()
 
-        # Unload whatever's currently active first — diffusers stacks adapters
-        # otherwise, and we want exactly one active LoRA at a time here.
+
+
         if self._loaded_lora_name is not None:
             try:
                 pipe.unload_lora_weights()
@@ -133,7 +133,7 @@ class Img2ImgGenerator:
         pipe.fuse_lora(lora_scale=weight)
         self._loaded_lora_name = lora_name
 
-    # -- generation ---------------------------------------------------------
+
     def generate(
         self,
         aligned_face: np.ndarray,
@@ -164,11 +164,11 @@ class Img2ImgGenerator:
 
         init_image = Image.fromarray(aligned_face).convert("RGB")
 
-        # Build the callback_on_step_end wrapper.
-        # The new diffusers API passes (pipe, step_index, timestep, callback_kwargs)
-        # and expects a dict back. The old callback/callback_steps params were
-        # removed and caused DPMSolverMultistepScheduler step_index to go out of
-        # bounds (IndexError: index 31 is out of bounds for dimension 0 with size 31).
+
+
+
+
+
         step_end_fn = None
         if callback is not None:
             def step_end_fn(pipe_ref, step_index: int, timestep, callback_kwargs: dict) -> dict:
@@ -215,8 +215,8 @@ class Img2ImgGenerator:
         for i, expr in enumerate(expressions):
             expr_callback = None
             if callback:
-                # Wrap to match the (step, timestep, latents) signature expected
-                # by generate(), which will wrap it again for callback_on_step_end.
+
+
                 expr_callback = lambda step, timestep, latents, idx=i, label=expr: callback(idx, len(expressions), label, step)
             results.append(self.generate(aligned_face, expr, subject_category, seed=seed, callback=expr_callback))
         return results

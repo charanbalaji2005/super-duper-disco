@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """Simple latency benchmark for the generation pipeline (requires models downloaded)."""
 from __future__ import annotations
 

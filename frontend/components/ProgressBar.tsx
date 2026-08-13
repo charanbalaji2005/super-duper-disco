@@ -1,6 +1,6 @@
 interface ProgressBarProps {
   label: string;
-  progress: number; // 0-100
+  progress: number; 
 }
 
 export default function ProgressBar({ label, progress }: ProgressBarProps) {

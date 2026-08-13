@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Builds a LoRA-training-ready dataset from images organized under
 datasets/generated/<expression>/*.{jpg,png}, using the exact same prompt

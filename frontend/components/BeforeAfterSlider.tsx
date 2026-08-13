@@ -64,7 +64,7 @@ export default function BeforeAfterSlider({
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* Before Image (Clipped Overlay) */}
+        
         <div
           className="absolute inset-0 overflow-hidden"
           style={{ width: `${sliderPosition}%` }}

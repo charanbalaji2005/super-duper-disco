@@ -1,21 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Gallery from "@/components/Gallery";
 import DownloadButton from "@/components/DownloadButton";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import { useApp } from "@/context/AppContext";
 import { alignedPreviewUrl, downloadZipUrl } from "@/services/api";
+import { getTasksFromCookies } from "@/utils/cookieUtils";
 import { Images, Sparkles, RefreshCw, SlidersHorizontal, ArrowLeft } from "lucide-react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function GalleryPage() {
   const router = useRouter();
-  const { latestResult, uploadFilename } = useApp();
+  const { latestResult, setLatestResult, uploadFilename } = useApp();
   const [showComparison, setShowComparison] = useState(false);
   const [selectedExpressionForCompare, setSelectedExpressionForCompare] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!latestResult || latestResult.images.length === 0) {
+      const savedTasks = getTasksFromCookies();
+      if (savedTasks.length > 0) {
+        const latest = savedTasks[0];
+        setLatestResult({
+          request_id: latest.id,
+          category: latest.category,
+          subtype: latest.subtype,
+          lora_used: latest.lora_used,
+          images: latest.outputs.map((o) => ({
+            expression: o.expression,
+            passed_quality: o.passed_quality,
+            failure_reasons: o.failure_reasons || [],
+            download_url: o.download_url || `/api/download/${latest.id}/${o.expression}`,
+          })),
+        });
+      }
+    }
+  }, [latestResult, setLatestResult]);
 
   if (!latestResult || latestResult.images.length === 0) {
     return (

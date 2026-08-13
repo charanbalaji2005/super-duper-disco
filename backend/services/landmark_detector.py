@@ -15,14 +15,14 @@ import numpy as np
 
 @dataclass
 class LandmarkResult:
-    points: list[tuple[float, float]]   # pixel coords, len == 468
+    points: list[tuple[float, float]]
     left_eye: tuple[float, float]
     right_eye: tuple[float, float]
     mouth_center: tuple[float, float]
     score: float
 
 
-# Canonical MediaPipe Face Mesh indices for eye/mouth centers.
+
 _LEFT_EYE_IDX = 33
 _RIGHT_EYE_IDX = 263
 _MOUTH_LEFT_IDX = 61
@@ -64,7 +64,7 @@ class LandmarkDetector:
             left_eye=points[_LEFT_EYE_IDX],
             right_eye=points[_RIGHT_EYE_IDX],
             mouth_center=mouth_center,
-            score=1.0,  # MediaPipe doesn't expose a per-face confidence for mesh; presence = detected
+            score=1.0,
         )
 
 

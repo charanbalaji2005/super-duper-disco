@@ -29,10 +29,10 @@ def align_by_eyes(
     src = np.array([left_eye, right_eye], dtype=np.float32)
     dst = np.array([dst_left, dst_right], dtype=np.float32)
 
-    # Estimate similarity transform (rotation + uniform scale + translation)
+
     transform, _ = cv2.estimateAffinePartial2D(src.reshape(1, 2, 2)[0], dst)
     if transform is None:
-        # Fallback: just resize/crop if the estimate degenerates (e.g. eyes overlap)
+
         return cv2.resize(arr, (size, size), interpolation=cv2.INTER_AREA)
 
     aligned = cv2.warpAffine(arr, transform, (size, size), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)

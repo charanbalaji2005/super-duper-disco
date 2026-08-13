@@ -2,14 +2,14 @@ from pydantic import BaseModel
 
 class ProgressState(BaseModel):
     request_id: str
-    status: str  # "idle" | "running" | "done" | "failed"
+    status: str
     progress_percent: int
     current_step: int
     total_steps: int
     current_expression: str
     total_expressions: int
 
-# Global in-memory storage for progress updates
+
 _progress_store: dict[str, ProgressState] = {}
 _cancelled_requests: set[str] = set()
 
@@ -36,7 +36,7 @@ def cancel_request(request_id: str):
         state = _progress_store[request_id]
         _progress_store[request_id] = ProgressState(
             request_id=request_id,
-            status="failed",  # Mark as failed/cancelled
+            status="failed",
             progress_percent=state.progress_percent,
             current_step=state.current_step,
             total_steps=state.total_steps,

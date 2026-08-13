@@ -40,7 +40,7 @@ export default function UploadPage() {
         detectFace(up.filename).catch(() => null),
       ]);
 
-      // Only commit state if classification succeeded
+      
       setUploadFilename(up.filename);
       setClassification(cls);
       setDetection(det);

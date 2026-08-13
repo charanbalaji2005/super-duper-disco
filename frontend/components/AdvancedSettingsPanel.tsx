@@ -123,9 +123,9 @@ export default function AdvancedSettingsPanel() {
             </div>
             <input
               type="range"
-              min={15}
+              min={1}
               max={50}
-              step={5}
+              step={1}
               value={settings.steps}
               onChange={(e) => updateSettings({ steps: parseInt(e.target.value, 10) })}
               className="accent-emerald-500 cursor-pointer"

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Train a LoRA adapter on top of Stable Diffusion 1.5 so it learns your
 expression-editing task specifically ("same face, only the expression
@@ -133,7 +133,7 @@ def main():
         mixed_precision=args.mixed_precision if args.mixed_precision != "no" else None,
     )
 
-    # --- Load base SD1.5 components ---
+
     tokenizer = CLIPTokenizer.from_pretrained(args.base_model, subfolder="tokenizer")
     text_encoder = CLIPTextModel.from_pretrained(args.base_model, subfolder="text_encoder")
     vae = AutoencoderKL.from_pretrained(args.base_model, subfolder="vae")
@@ -144,7 +144,7 @@ def main():
     text_encoder.requires_grad_(not args.train_text_encoder and False or args.train_text_encoder)
     unet.requires_grad_(False)
 
-    # --- Inject LoRA adapters into the UNet's cross/self-attention layers ---
+
     unet_lora_config = LoraConfig(
         r=args.rank,
         lora_alpha=args.alpha,

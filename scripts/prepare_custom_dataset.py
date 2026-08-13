@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Prepares the LoRA training dataset from train_labels.csv + DATASET/train/.
 
@@ -33,7 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Label index → expression name (matches DATASET/train/<label>/ folders)
+
 EXPRESSIONS = {
     "1": "surprise",
     "2": "fear",
@@ -44,10 +44,10 @@ EXPRESSIONS = {
     "7": "neutral",
 }
 
-# Mirrors the IDENTITY_ANCHOR in prompt_builder.py — must stay in sync.
+
 IDENTITY_ANCHOR = "same person, same face, same identity,"
 
-# Mirrors the QUALITY_TAIL in prompt_builder.py — must stay in sync.
+
 QUALITY_TAIL = (
     "photorealistic portrait, same lighting, same background, same pose, "
     "same skin tone, same hairstyle, high detail skin texture, sharp focus"
@@ -109,7 +109,7 @@ def main():
     for key, caption in captions.items():
         print(f"  [{key}] {EXPRESSIONS[key]:10s}: {caption[:80]}...")
 
-    # Track per-class counts for optional cap + balance reporting
+
     class_counts: dict[str, int] = {k: 0 for k in EXPRESSIONS}
     counter = 0
     skipped = 0
@@ -127,12 +127,12 @@ def main():
                 skipped += 1
                 continue
 
-            # Respect per-class cap if set
+
             if args.max_per_class and class_counts[label] >= args.max_per_class:
                 skipped += 1
                 continue
 
-            # Try label-numbered subdir first, then expression-name subdir
+
             src = args.dataset_dir / label / img_name
             if not src.exists():
                 src = args.dataset_dir / EXPRESSIONS[label] / img_name

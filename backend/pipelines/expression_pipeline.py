@@ -80,8 +80,8 @@ def run_expression_pipeline(
         f" with LoRA '{lora_name}'" if lora_name else "",
     )
 
-    # Load the pipeline (and LoRA, if any) once up front rather than per
-    # expression — all 7 generations reuse the same loaded weights.
+
+
     if lora_name is not None:
         generator.set_lora(lora_name, weight=lora_weight if lora_weight is not None else 0.8)
 

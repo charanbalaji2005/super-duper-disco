@@ -48,6 +48,8 @@ export interface LoraListResponse {
 export interface HistoryImageOut {
   expression: string;
   passed_quality: boolean;
+  download_url?: string;
+  failure_reasons?: string[];
 }
 
 export interface HistoryItemOut {

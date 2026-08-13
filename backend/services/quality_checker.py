@@ -41,7 +41,7 @@ class QualityChecker:
     ) -> QualityReport:
         reasons: list[str] = []
 
-        # 1. Face still detectable in the generated output
+
         face = self.detector.detect(generated_rgb)
         if face is None:
             return QualityReport(
@@ -51,12 +51,12 @@ class QualityChecker:
         if face.confidence < self.cfg.get("min_face_confidence", 0.8):
             reasons.append(f"Low face confidence: {face.confidence:.2f}")
 
-        # 2. Blur check
+
         blur_var = laplacian_blur_variance(generated_rgb)
         if blur_var < self.cfg.get("max_blur_variance_reject_below", 80.0):
             reasons.append(f"Image too blurry (variance={blur_var:.1f})")
 
-        # 3. Identity similarity (only possible if we have embeddings, i.e. InsightFace path)
+
         identity_sim = None
         if source_embedding is not None and face.embedding is not None:
             identity_sim = self.detector.cosine_similarity(source_embedding, face.embedding)
@@ -64,7 +64,7 @@ class QualityChecker:
             if identity_sim is not None and identity_sim < min_sim:
                 reasons.append(f"Identity drifted too far (similarity={identity_sim:.2f} < {min_sim})")
 
-        # 4. Duplicate / "nothing changed" check via perceptual hash distance
+
         src_hash = imagehash.phash(Image.fromarray(source_rgb))
         gen_hash = imagehash.phash(Image.fromarray(generated_rgb))
         hash_distance = src_hash - gen_hash

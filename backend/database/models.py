@@ -14,8 +14,8 @@ class GenerationRequest(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True)
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=dt.datetime.utcnow)
     source_filename: Mapped[str] = mapped_column(String)
-    category: Mapped[str] = mapped_column(String)          # human | animal
-    subtype: Mapped[str] = mapped_column(String)            # male | female | cat | dog | other | unspecified
+    category: Mapped[str] = mapped_column(String)
+    subtype: Mapped[str] = mapped_column(String)
     category_confidence: Mapped[float] = mapped_column(Float)
     subtype_confidence: Mapped[float] = mapped_column(Float)
     requested_expressions: Mapped[list] = mapped_column(JSON)

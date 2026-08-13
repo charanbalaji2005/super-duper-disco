@@ -13,7 +13,7 @@ def test_prompt_switches_framing_for_animal():
 
 
 def test_gender_does_not_affect_prompt():
-    # Prompt builder takes subject_category, not gender/subtype — this test
-    # documents that design constraint so it can't silently regress.
+
+
     human_prompt = build_prompt("neutral", "human")
     assert "male" not in human_prompt.lower() and "female" not in human_prompt.lower()

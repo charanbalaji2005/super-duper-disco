@@ -41,8 +41,8 @@ class OnnxClassifier:
     def _preprocess(self, image_rgb: np.ndarray) -> np.ndarray:
         resized = cv2.resize(image_rgb, (self.input_size, self.input_size), interpolation=cv2.INTER_AREA)
         arr = resized.astype(np.float32) / 255.0
-        arr = arr.transpose(2, 0, 1)  # HWC -> CHW
-        return np.expand_dims(arr, axis=0)  # add batch dim
+        arr = arr.transpose(2, 0, 1)
+        return np.expand_dims(arr, axis=0)
 
     @staticmethod
     def _softmax(logits: np.ndarray) -> np.ndarray:

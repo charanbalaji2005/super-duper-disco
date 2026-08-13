@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     max_upload_mb: int = 15
     generation_strength: float = 0.45
     generation_guidance_scale: float = 7.5
-    generation_steps: int = 30
+    generation_steps: int = 13
 
     log_level: str = "INFO"
 

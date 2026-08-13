@@ -10,6 +10,8 @@ import { useApp } from "@/context/AppContext";
 import { alignedPreviewUrl, generateExpressions, cancelGeneration } from "@/services/api";
 import { Sparkles, Layers, ArrowLeft, ArrowRight, AlertCircle, XCircle } from "lucide-react";
 
+import { saveSingleTaskToCookies, generateResponseToHistoryItem } from "@/utils/cookieUtils";
+
 export default function GeneratePage() {
   const router = useRouter();
   const {
@@ -28,7 +30,7 @@ export default function GeneratePage() {
   const [progressPercent, setProgressPercent] = useState(0);
   const [currentExpression, setCurrentExpression] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
-  const [totalSteps, setTotalSteps] = useState(30);
+  const [totalSteps, setTotalSteps] = useState(13);
   const [activeRequestId, setActiveRequestId] = useState<string | null>(null);
   
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -70,7 +72,7 @@ export default function GeneratePage() {
     setCurrentExpression("");
     setCurrentStep(0);
 
-    // Start background progress polling
+    
     pollIntervalRef.current = setInterval(async () => {
       try {
         const { getGenerationProgress } = await import("@/services/api");
@@ -80,7 +82,7 @@ export default function GeneratePage() {
         setCurrentStep(prog.current_step);
         setTotalSteps(prog.total_steps);
       } catch (e) {
-        // Stale or not started yet, ignore
+        
       }
     }, 1000);
 
@@ -98,6 +100,7 @@ export default function GeneratePage() {
         pollIntervalRef.current = null;
       }
       setLatestResult(res);
+      saveSingleTaskToCookies(generateResponseToHistoryItem(res));
       addToast(`Successfully generated ${res.images.length} synthetic expression(s)!`, "success");
       router.push("/gallery");
     } catch (err: any) {

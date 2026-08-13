@@ -13,6 +13,8 @@ router = APIRouter(prefix="/api/history", tags=["history"])
 class HistoryImageOut(BaseModel):
     expression: str
     passed_quality: bool
+    download_url: str
+    failure_reasons: list[str] = []
 
 
 class HistoryItemOut(BaseModel):
@@ -36,7 +38,15 @@ async def list_history(limit: int = 50, db: AsyncSession = Depends(get_db)) -> l
             subtype=r.subtype,
             requested_expressions=r.requested_expressions,
             lora_used=r.lora_used,
-            outputs=[HistoryImageOut(expression=o.expression, passed_quality=o.passed_quality) for o in r.outputs],
+            outputs=[
+                HistoryImageOut(
+                    expression=o.expression,
+                    passed_quality=o.passed_quality,
+                    download_url=f"/api/download/{r.id}/{o.expression}",
+                    failure_reasons=o.failure_reasons or [],
+                )
+                for o in r.outputs
+            ],
         )
         for r in records
     ]

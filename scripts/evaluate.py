@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """Evaluate generation quality-pass rate across a folder of test images."""
 from __future__ import annotations
 

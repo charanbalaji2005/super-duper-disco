@@ -9,7 +9,7 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col gap-16 py-8">
-      {/* Hero Section */}
+      
       <section className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/40 p-8 md:p-14 backdrop-blur-2xl shadow-2xl">
         <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-purple-600/20 blur-3xl" />
         <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-indigo-600/20 blur-3xl" />
